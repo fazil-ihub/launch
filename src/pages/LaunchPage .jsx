@@ -1,13 +1,31 @@
+import { useEffect, useRef } from 'react';
 import launchImage from "../assets/launch1.jpg";
 import appLogo from "../assets/appLogo.svg"; 
 
 export default function LaunchPage() {
+  const containerRef = useRef(null);
+
   const handleLaunch = () => {
     window.location.href = "https://okrion.ai/";
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleLaunch();
+    }
+  };
+
+  useEffect(() => {
+    // Focus the container when component mounts
+    if (containerRef.current) {
+      containerRef.current.focus();
+    }
+  }, []);
+
   return (
     <div
+      ref={containerRef}
+      tabIndex={0}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -18,9 +36,15 @@ export default function LaunchPage() {
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
+        cursor: "pointer",
+        outline: "none",
       }}
+      onClick={handleLaunch}
+      onKeyDown={handleKeyDown}
+      role="button"
+      aria-label="Press Enter to launch OKRion website"
     >
-      {/* Enhanced Blurry Gradient Circles (using your original colors) */}
+      {/* Enhanced Blurry Gradient Circles */}
       <div style={{
         position: "absolute",
         borderRadius: "50%",
@@ -60,7 +84,7 @@ export default function LaunchPage() {
         animation: "float 12s ease-in-out infinite 4s",
       }}></div>
 
-      {/* Logo Image with subtle glow */}
+      {/* Logo Image */}
       <img 
         src={appLogo} 
         alt="OKRion Logo" 
@@ -68,14 +92,13 @@ export default function LaunchPage() {
           width: "200px", 
           marginBottom: "50px",
           zIndex: 1,
-        //   filter: "drop-shadow(0 0 10px rgba(8, 171, 147, 0.3))",
           transition: "transform 0.3s ease",
         }}
         onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.05)"}
         onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
       />
 
-      {/* Launch Image with enhanced effects */}
+      {/* Launch Image */}
       <div style={{
         position: "relative",
         zIndex: 1,
@@ -84,7 +107,6 @@ export default function LaunchPage() {
         <img 
           src={launchImage} 
           alt="Launch" 
-          onClick={handleLaunch} 
           style={{ 
             width: "300px", 
             cursor: "pointer", 
@@ -120,8 +142,6 @@ export default function LaunchPage() {
         fontSize: "1.2rem",
         marginBottom: "50px",
         zIndex: 1,
-        // textShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
-        // background: "linear-gradient(90deg, #08ab93, #2fffe0)",
         WebkitBackgroundClip: "text",
         backgroundClip: "text",
         color: "black",
@@ -130,7 +150,7 @@ export default function LaunchPage() {
         Ready, Set, Launch! OKRion is Here to Transform!🔥✨
       </p>
 
-      {/* Animated dots using your original teal colors */}
+      {/* Animated dots */}
       <div style={{
         display: "flex",
         gap: "10px",
@@ -160,6 +180,9 @@ export default function LaunchPage() {
         @keyframes bounce {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
+        }
+        div[tabindex]:focus {
+          box-shadow: 0 0 0 3px rgba(8, 171, 147, 0.5);
         }
       `}</style>
     </div>
