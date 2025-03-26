@@ -1,4 +1,3 @@
-import { useState } from "react";
 import launchImage from "../assets/launch1.jpg";
 import appLogo from "../assets/appLogo.svg"; 
 
